@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const pool = require('./db/pool');
 const session = require('express-session');
 const indexRouter = require('./routes/indexRouter');
+const e = require('express');
 
 const pgSession = require('connect-pg-simple')(session);
 
@@ -35,5 +36,10 @@ app.use((req, res, next) => {
   next();
 });
 app.use(indexRouter);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 app.listen(3000, () => console.log('app listening on port 3000!'));

@@ -1,12 +1,12 @@
 const bcrypt = require('bcryptjs');
 const db = require('../db/queries');
 const home = async (req, res) => {
-  res.render('index', { user: req.user });
+  res.render('index', { title: 'Members Only' });
 };
 const signUpFormGET = (req, res) => {
   res.render('signup', { title: 'Sign Up' });
 };
-const signUpFormPOST = async (req, res) => {
+const signUpFormPOST = async (req, res, next) => {
   try {
     await db.createUser(
       req.body.fname,
