@@ -3,6 +3,7 @@ const passport = require('passport');
 const db = require('../db/queries');
 const home = async (req, res) => {
   const messages = await db.getMessages();
+  console.log(req.user);
   res.render('index', { title: 'Members Only', messages });
 };
 const signUpFormGET = (req, res) => {
@@ -14,7 +15,8 @@ const signUpFormPOST = async (req, res, next) => {
       req.body.fname,
       req.body.lname,
       req.body.email,
-      req.body.password
+      req.body.password,
+      req.body.isAdmin
     );
     res.redirect('/');
   } catch (err) {
@@ -68,6 +70,20 @@ const deleteMessage = async (req, res, next) => {
   }
 };
 
+const membershipGET = (req, res) => {
+  res.render('membership', { title: 'Membership' });
+};
+
+const membershipPOST = async (req, res, next) => {
+  const { secretPassword } = req.body;
+  if (secretPassword === process.env.SECRET_PASSWORD) {
+    await db.makeMember(req.user.id);
+    res.redirect('/');
+  } else {
+    res.redirect('/membership');
+  }
+};
+
 module.exports = {
   home,
   signUpFormGET,
@@ -78,4 +94,6 @@ module.exports = {
   updateMessageGET,
   updateMessagePOST,
   deleteMessage,
+  membershipGET,
+  membershipPOST,
 };

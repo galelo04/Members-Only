@@ -1,11 +1,11 @@
 const pool = require('./pool');
 const bcrypt = require('bcryptjs');
 
-const createUser = async (fname, lname, email, password) => {
+const createUser = async (fname, lname, email, password, isAdmin) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   await pool.query(
-    'insert into users (fname,lname,email,password) values ($1, $2, $3, $4)',
-    [fname, lname, email, hashedPassword]
+    'insert into users (fname,lname,email,password,isAdmin) values ($1, $2, $3, $4, $5)',
+    [fname, lname, email, hashedPassword, isAdmin]
   );
 };
 
@@ -55,6 +55,13 @@ const deleteMessage = async (id) => {
   await pool.query('DELETE FROM messages WHERE id = $1', [id]);
 };
 
+const makeMember = async (id) => {
+  await pool.query('UPDATE users SET status = $1 WHERE id = $2', [
+    'member',
+    id,
+  ]);
+};
+
 module.exports = {
   createUser,
   getUserByEmail,
@@ -64,4 +71,5 @@ module.exports = {
   getMessageById,
   updateMessage,
   deleteMessage,
+  makeMember,
 };

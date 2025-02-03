@@ -9,18 +9,22 @@
     <% if (locals.currentUser) {%>
     <h1>WELCOME BACK <%= currentUser.fname %></h1>
     <a href="/log-out">LOG OUT</a>
-    <a href="/new-message">New Message</a>
 
-    <p>Subscribe to the club to add messages to the board</p>
-    <% } else { %>
-    <h1>please log in or sign up</h1>
+    <%if(locals.currentUser?.status === 'member'){%>
+    <a href="/new-message">New Message</a>
+    <%}else{%>
+    <p>click to be a member</p>
+    <a href="/membership">join</a>
+    <%}} else { %>
     <a href="/sign-up">sign-up</a>
     <a href="/login">login</a>
     <%}%> <%messages.forEach((message) => {%>
     <h2>title: <%= message.title %></h2>
     <p>text: <%= message.text %></p>
     <p>date: <%= message.timestamp.toLocaleDateString("en-UK")%></p>
+    <%if (locals.currentUser?.status === 'member') {%>
     <p>author: <%= message.author%></p>
+    <% if(locals.currentUser?.isadmin){%>
     <a href="/update-message/<%= message.id%>">update</a>
     <form action="/delete-message/<%= message.id%>" method="post">
       <button
@@ -30,6 +34,7 @@
         Delete
       </button>
     </form>
+    <%}}%>
     <hr />
     <%});%>
   </body>

@@ -2,6 +2,7 @@ const passport = require('passport');
 const indexController = require('../controllers/indexController');
 
 const { Router } = require('express');
+const { isMember, isAdmin, isAuth } = require('../middlewares/authentication');
 const indexRouter = Router();
 
 indexRouter.get('/', indexController.home);
@@ -26,11 +27,22 @@ indexRouter.get('/log-out', (req, res, next) => {
   });
 });
 
-indexRouter.get('/new-message', indexController.createMessageGET);
-indexRouter.post('/new-message', indexController.createMessagePOST);
+indexRouter.get('/new-message', isMember, indexController.createMessageGET);
+indexRouter.post('/new-message', isMember, indexController.createMessagePOST);
 
-indexRouter.get('/update-message/:id', indexController.updateMessageGET);
-indexRouter.post('/update-message/:id', indexController.updateMessagePOST);
+indexRouter.get(
+  '/update-message/:id',
+  isAdmin,
+  indexController.updateMessageGET
+);
+indexRouter.post(
+  '/update-message/:id',
+  isAdmin,
+  indexController.updateMessagePOST
+);
 
-indexRouter.post('/delete-message/:id', indexController.deleteMessage);
+indexRouter.post('/delete-message/:id', isAdmin, indexController.deleteMessage);
+
+indexRouter.get('/membership', isAuth, indexController.membershipGET);
+indexRouter.post('/membership', isAuth, indexController.membershipPOST);
 module.exports = indexRouter;
