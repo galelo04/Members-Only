@@ -30,6 +30,7 @@ app.use(
 );
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+require('./config/passport');
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
