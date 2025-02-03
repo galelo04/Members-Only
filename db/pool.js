@@ -19,8 +19,8 @@ module.exports = new Pool({
   user: PGUSER,
   database: PGDATABASE,
   password: PGPASSWORD,
-  port: PORT, // The default port
+  port: PORT || 5432,
   ssl: {
-    require: true,
+    rejectUnauthorized: false, // Required for Neon
   },
 });
