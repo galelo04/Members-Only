@@ -21,4 +21,11 @@ const getUserById = async (id) => {
   return rows[0];
 };
 
-module.exports = { createUser, getUserByEmail, getUserById };
+const createMessage = async (title, text, user_id) => {
+  await pool.query(
+    'insert into messages (title, text, user_id) values ($1, $2, $3)',
+    [title, text, user_id]
+  );
+};
+
+module.exports = { createUser, getUserByEmail, getUserById, createMessage };

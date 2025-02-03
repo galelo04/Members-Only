@@ -25,9 +25,26 @@ const logInFormGET = (req, res) => {
   res.render('login', { title: 'Log In' });
 };
 
+const createMessageGET = (req, res) => {
+  res.render('newMessage', { title: 'Create Message' });
+};
+
+const createMessagePOST = async (req, res, next) => {
+  const { title, text } = req.body;
+  const { id } = req.user;
+  try {
+    await db.createMessage(title, text, id);
+    res.redirect('/');
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   home,
   signUpFormGET,
   signUpFormPOST,
   logInFormGET,
+  createMessageGET,
+  createMessagePOST,
 };
