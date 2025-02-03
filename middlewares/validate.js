@@ -1,21 +1,21 @@
-const { check, validationResult, body } = require('express-validator');
+const { validationResult, body } = require('express-validator');
 
 const signupValidationRules = [
-  body('firstName')
+  body('fname')
     .escape()
     .trim()
     .isAlpha()
     .withMessage('First name must contain only letters.')
-    .isLength({ min: 1, max: 10 })
-    .withMessage('First name must be between 1 and 10 characters.'),
+    .isLength({ min: 1, max: 20 })
+    .withMessage('First name must be between 1 and 20 characters.'),
 
-  body('lastName')
+  body('lname')
     .escape()
     .trim()
     .isAlpha()
     .withMessage('Last name must contain only letters.')
-    .isLength({ min: 1, max: 10 })
-    .withMessage('Last name must be between 1 and 10 characters.'),
+    .isLength({ min: 1, max: 20 })
+    .withMessage('Last name must be between 1 and 20 characters.'),
 
   body('email')
     .trim()
@@ -49,10 +49,6 @@ const loginValidationRules = [
     .trim()
     .isEmail()
     .withMessage('Please enter a valid email address.'),
-
-  body('password')
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters long.'),
 ];
 
 const validateLogin = (req, res, next) => {

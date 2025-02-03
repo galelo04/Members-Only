@@ -18,6 +18,10 @@ indexRouter.get('/', indexController.home);
 indexRouter.get('/sign-up', indexController.signUpFormGET);
 indexRouter.post(
   '/sign-up',
+  (req, res, next) => {
+    console.log(req.body);
+    next();
+  },
   signupValidationRules,
   validateSignup,
   indexController.signUpFormPOST

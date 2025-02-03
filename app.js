@@ -12,6 +12,8 @@ const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
 // config view engine
+app.use(express.static(path.join(__dirname, 'public'))); // Serves static files from "public"
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

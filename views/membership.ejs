@@ -3,26 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
     <title><%= title%></title>
   </head>
   <body>
-    <h1><%= title%></h1>
-    <%if(locals.currentUser?.status==='member'){%>
-    <p>You are already a member</p>
-    <a href="/new-message">New Message</a>
-    <a href="/">go back home</a>
-    <%}else{%>
-    <p>Enter the secret password to validate your membership</p>
-    <form action="/membership" method="post">
-      <label for="secretPassword">Secret Password</label>
-      <input
-        type="password"
-        id="secretPassword"
-        name="secretPassword"
-        required
-      /><br /><br />
-      <button type="submit">Validate Membership</button>
-    </form>
-    <%}%>
+    <div class="container">
+      <h1><%= title%></h1>
+      <%if(locals.currentUser?.status==='member'){%>
+      <p>You are already a member</p>
+      <a href="/new-message">New Message</a>
+      <a href="/">go back home</a>
+      <%}else{%>
+      <p>Enter the secret password to validate your membership</p>
+      <form action="/membership" method="post">
+        <label for="secretPassword">Secret Password</label>
+        <input
+          type="password"
+          id="secretPassword"
+          name="secretPassword"
+          required
+        /><br /><br />
+        <button type="submit">Validate Membership</button>
+      </form>
+      <%}%>
+    </div>
   </body>
 </html>

@@ -3,23 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
     <title><%= title%></title>
   </head>
   <body>
-    <h1><%= title%></h1>
-    <form action="/update-message/<%=message.id%>" method="post">
-      <label for="title">Message's Title:</label>
-      <input
-        type="text"
-        id="title"
-        name="title"
-        value="<%=message.title%>"
-        required
-      /><br /><br />
-      <label for="text">Message:</label>
-      <textarea id="text" name="text" required><%= message.text%></textarea
-      ><br /><br />
-      <button type="submit">Send</button>
-    </form>
+    <div class="container">
+      <%- include("./errors.ejs") %>
+      <h1><%= title%></h1>
+      <form action="/update-message/<%=message.id%>" method="post">
+        <label for="title">Message's Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="<%=message.title%>"
+          required
+        /><br /><br />
+        <label for="text">Message:</label>
+        <textarea id="text" name="text" required><%= message.text%></textarea
+        ><br /><br />
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </body>
 </html>
