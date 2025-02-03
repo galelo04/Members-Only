@@ -7,7 +7,7 @@ const home = async (req, res) => {
   res.render('index', { title: 'Members Only', messages });
 };
 const signUpFormGET = (req, res) => {
-  res.render('sign-up', { title: 'Sign Up' });
+  res.render('signup', { title: 'Sign Up' });
 };
 const signUpFormPOST = async (req, res, next) => {
   try {

@@ -3,15 +3,31 @@ const indexController = require('../controllers/indexController');
 
 const { Router } = require('express');
 const { isMember, isAdmin, isAuth } = require('../middlewares/authentication');
+const {
+  validateSignup,
+  validateLogin,
+  validateMessage,
+  validateUpdateMessage,
+  signupValidationRules,
+  loginValidationRules,
+  messageValidationRules,
+} = require('../middlewares/validate');
 const indexRouter = Router();
 
 indexRouter.get('/', indexController.home);
 indexRouter.get('/sign-up', indexController.signUpFormGET);
-indexRouter.post('/sign-up', indexController.signUpFormPOST);
+indexRouter.post(
+  '/sign-up',
+  signupValidationRules,
+  validateSignup,
+  indexController.signUpFormPOST
+);
 
 indexRouter.get('/login', indexController.logInFormGET);
 indexRouter.post(
   '/login',
+  loginValidationRules,
+  validateLogin,
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
@@ -28,7 +44,13 @@ indexRouter.get('/log-out', (req, res, next) => {
 });
 
 indexRouter.get('/new-message', isMember, indexController.createMessageGET);
-indexRouter.post('/new-message', isMember, indexController.createMessagePOST);
+indexRouter.post(
+  '/new-message',
+  messageValidationRules,
+  validateMessage,
+  isMember,
+  indexController.createMessagePOST
+);
 
 indexRouter.get(
   '/update-message/:id',
@@ -37,6 +59,8 @@ indexRouter.get(
 );
 indexRouter.post(
   '/update-message/:id',
+  messageValidationRules,
+  validateUpdateMessage,
   isAdmin,
   indexController.updateMessagePOST
 );
