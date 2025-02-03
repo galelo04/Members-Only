@@ -9,6 +9,8 @@
     <% if (locals.currentUser) {%>
     <h1>WELCOME BACK <%= currentUser.fname %></h1>
     <a href="/log-out">LOG OUT</a>
+
+    <p>Subscribe to add messages to the board</p>
     <% } else { %>
     <h1>please log in or sign up</h1>
     <a href="/sign-up">sign-up</a>
