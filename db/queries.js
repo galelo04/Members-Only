@@ -28,4 +28,18 @@ const createMessage = async (title, text, user_id) => {
   );
 };
 
-module.exports = { createUser, getUserByEmail, getUserById, createMessage };
+const getMessages = async () => {
+  const { rows } =
+    await pool.query(`SELECT title , text ,timestamp , CONCAT(fname ,' ',lname) as author FROM users
+    JOIN messages ON users.id = messages.user_id
+    ORDER BY timestamp DESC`);
+  return rows;
+};
+
+module.exports = {
+  createUser,
+  getUserByEmail,
+  getUserById,
+  createMessage,
+  getMessages,
+};

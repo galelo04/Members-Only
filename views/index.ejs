@@ -9,12 +9,19 @@
     <% if (locals.currentUser) {%>
     <h1>WELCOME BACK <%= currentUser.fname %></h1>
     <a href="/log-out">LOG OUT</a>
+    <a href="/new-message">New Message</a>
 
-    <p>Subscribe to add messages to the board</p>
+    <p>Subscribe to the club to add messages to the board</p>
     <% } else { %>
     <h1>please log in or sign up</h1>
     <a href="/sign-up">sign-up</a>
     <a href="/login">login</a>
-    <%}%>
+    <%}%> <%messages.forEach((message) => {%>
+    <h2>title: <%= message.title %></h2>
+    <p>text: <%= message.text %></p>
+    <p>date: <%= message.timestamp.toLocaleDateString("en-UK")%></p>
+    <p>author: <%= message.author%></p>
+    <hr />
+    <%});%>
   </body>
 </html>

@@ -2,7 +2,8 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const db = require('../db/queries');
 const home = async (req, res) => {
-  res.render('index', { title: 'Members Only' });
+  const messages = await db.getMessages();
+  res.render('index', { title: 'Members Only', messages });
 };
 const signUpFormGET = (req, res) => {
   res.render('sign-up', { title: 'Sign Up' });
