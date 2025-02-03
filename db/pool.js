@@ -15,11 +15,11 @@ const {
 // All of the following properties should be read from environment variables
 // We're hardcoding them here for simplicity
 module.exports = new Pool({
-  host: PGHOST, // or wherever the db is hosted
-  user: PGUSER,
-  database: PGDATABASE,
-  password: PGPASSWORD,
-  port: PORT || 5432,
+  host: process.env.PGHOST,
+  user: process.env.PGUSER,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT || 5432,
   ssl: {
     rejectUnauthorized: false, // Required for Neon
   },
