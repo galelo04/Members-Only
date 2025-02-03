@@ -30,10 +30,29 @@ const createMessage = async (title, text, user_id) => {
 
 const getMessages = async () => {
   const { rows } =
-    await pool.query(`SELECT title , text ,timestamp , CONCAT(fname ,' ',lname) as author FROM users
+    await pool.query(`SELECT title , text ,timestamp,messages.id , CONCAT(fname ,' ',lname) as author FROM users
     JOIN messages ON users.id = messages.user_id
     ORDER BY timestamp DESC`);
   return rows;
+};
+
+const getMessageById = async (id) => {
+  const { rows } = await pool.query('SELECT * FROM messages WHERE id = $1', [
+    id,
+  ]);
+  return rows[0];
+};
+
+const updateMessage = async (title, text, id) => {
+  await pool.query('UPDATE messages SET title = $1, text = $2 WHERE id = $3', [
+    title,
+    text,
+    id,
+  ]);
+};
+
+const deleteMessage = async (id) => {
+  await pool.query('DELETE FROM messages WHERE id = $1', [id]);
 };
 
 module.exports = {
@@ -42,4 +61,7 @@ module.exports = {
   getUserById,
   createMessage,
   getMessages,
+  getMessageById,
+  updateMessage,
+  deleteMessage,
 };

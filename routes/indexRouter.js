@@ -28,4 +28,9 @@ indexRouter.get('/log-out', (req, res, next) => {
 
 indexRouter.get('/new-message', indexController.createMessageGET);
 indexRouter.post('/new-message', indexController.createMessagePOST);
+
+indexRouter.get('/update-message/:id', indexController.updateMessageGET);
+indexRouter.post('/update-message/:id', indexController.updateMessagePOST);
+
+indexRouter.post('/delete-message/:id', indexController.deleteMessage);
 module.exports = indexRouter;

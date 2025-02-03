@@ -41,6 +41,33 @@ const createMessagePOST = async (req, res, next) => {
   }
 };
 
+const updateMessageGET = async (req, res, next) => {
+  const { id } = req.params;
+  const message = await db.getMessageById(id);
+  res.render('updateMessage', { title: 'Update Message', message });
+};
+
+const updateMessagePOST = async (req, res, next) => {
+  const { title, text } = req.body;
+  const { id } = req.params;
+  try {
+    await db.updateMessage(title, text, id);
+    res.redirect('/');
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const deleteMessage = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await db.deleteMessage(id);
+    res.redirect('/');
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   home,
   signUpFormGET,
@@ -48,4 +75,7 @@ module.exports = {
   logInFormGET,
   createMessageGET,
   createMessagePOST,
+  updateMessageGET,
+  updateMessagePOST,
+  deleteMessage,
 };
